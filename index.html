@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Caesar Cipher Encryption & Cryptanalysis Tool. Encrypt, decrypt, visualize, brute-force crack, and analyze substitution ciphers in real-time.">
+    <meta name="keywords" content="Caesar Cipher, Encryption Tool, Cryptography, Decryption, ROT13, Brute Force Crack, Frequency Analysis, Web Security">
+    <meta name="author" content="Antigravity Senior Engineering">
+    <title>Caesar Cipher Encryption & Cryptanalysis Tool</title>
+    
+    <!-- Open Graph & Twitter Cards -->
+    <meta property="og:title" content="Caesar Cipher Encryption Tool">
+    <meta property="og:description" content="Production-grade Caesar Cipher Studio with live visual alphabet wheel, step-by-step breakdown, brute-force cracker, and frequency analysis.">
+    <meta property="og:image" content="assets/preview.png">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon & Stylesheet -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Google Fonts for Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to Main Content</a>
+
+    <!-- Application Wrapper -->
+    <div class="app-container">
+        
+        <!-- Header Navigation Bar -->
+        <header class="app-header">
+            <div class="header-brand">
+                <img src="assets/logo.png" alt="Caesar Cipher Logo" class="header-logo" width="42" height="42">
+                <div class="brand-text">
+                    <h1 class="brand-title">CAESAR CIPHER <span class="badge-tag">v2.0 SaaS</span></h1>
+                    <p class="brand-subtitle">Enterprise Encryption & Cryptanalysis Studio</p>
+                </div>
+            </div>
+
+            <!-- Global Action Controls -->
+            <div class="header-controls">
+                <div class="live-status-pill" id="liveStatusPill" title="Live encryption toggle state">
+                    <span class="status-dot"></span>
+                    <span class="status-label">Live: OFF</span>
+                </div>
+
+                <!-- Theme Switcher -->
+                <div class="control-group">
+                    <label for="themeSelect" class="sr-only">Choose Theme</label>
+                    <select id="themeSelect" class="theme-select" aria-label="Select Application Theme">
+                        <option value="dark">🌙 Slate Dark (Default)</option>
+                        <option value="light">☀️ Light Modern</option>
+                        <option value="neon">⚡ Cyberpunk Neon</option>
+                        <option value="matrix">💻 Matrix Hacker</option>
+                        <option value="glass">🔮 Obsidian Glass</option>
+                    </select>
+                </div>
+
+                <!-- Audio Toggle -->
+                <button id="soundToggle" class="icon-btn" title="Toggle Sound Effects" aria-label="Toggle Sound Effects">
+                    <span class="icon">🔊</span>
+                </button>
+
+                <!-- Animation Toggle -->
+                <button id="animToggle" class="icon-btn" title="Toggle UI Animations" aria-label="Toggle UI Animations">
+                    <span class="icon">✨</span>
+                </button>
+
+                <!-- Keyboard Shortcuts Help -->
+                <button id="shortcutsBtn" class="icon-btn" title="Keyboard Shortcuts (?)" aria-label="Keyboard Shortcuts">
+                    <span class="icon">❓</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Navigation Tabs Bar -->
+        <nav class="app-nav" aria-label="Primary Navigation">
+            <button class="nav-tab active" data-tab="studio" id="tab-studio" role="tab" aria-selected="true" aria-controls="view-studio">
+                <span class="tab-icon">🔒</span> Cipher Studio
+            </button>
+            <button class="nav-tab" data-tab="wheel" id="tab-wheel" role="tab" aria-selected="false" aria-controls="view-wheel">
+                <span class="tab-icon">🎡</span> Alphabet Wheel & Steps
+            </button>
+            <button class="nav-tab" data-tab="crack" id="tab-crack" role="tab" aria-selected="false" aria-controls="view-crack">
+                <span class="tab-icon">⚡</span> Cryptanalysis & Crack
+            </button>
+            <button class="nav-tab" data-tab="history" id="tab-history" role="tab" aria-selected="false" aria-controls="view-history">
+                <span class="tab-icon">📜</span> History & Favorites
+            </button>
+            <button class="nav-tab" data-tab="academy" id="tab-academy" role="tab" aria-selected="false" aria-controls="view-academy">
+                <span class="tab-icon">📚</span> Academy & Theory
+            </button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main id="main-content" class="main-content">
+            
+            <!-- TAB 1: CIPHER STUDIO (WORKSPACE) -->
+            <section id="view-studio" class="tab-view active" role="tabpanel" aria-labelledby="tab-studio">
+                
+                <!-- Studio Top Bar Controls -->
+                <div class="studio-top-bar glass-card">
+                    <div class="mode-switch-group">
+                        <span class="control-label">Operation Mode:</span>
+                        <div class="segmented-control">
+                            <button id="btnModeEncrypt" class="segment-btn active" data-mode="encrypt">
+                                🔐 Encrypt
+                            </button>
+                            <button id="btnModeDecrypt" class="segment-btn" data-mode="decrypt">
+                                🔓 Decrypt
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="toggle-group">
+                        <label class="switch-container" for="liveToggle">
+                            <input type="checkbox" id="liveToggle">
+                            <span class="slider-toggle"></span>
+                            <span class="toggle-text">Auto-Live Cipher</span>
+                        </label>
+                    </div>
+
+                    <div class="studio-quick-actions">
+                        <button id="btnQuickClear" class="btn-text-danger" title="Clear all text fields">
+                            🧹 Clear Fields
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Dual-Pane Workspace -->
+                <div class="workspace-grid">
+                    
+                    <!-- Left Column: Input & Controls -->
+                    <div class="workspace-pane glass-card">
+                        <div class="pane-header">
+                            <div class="pane-title">
+                                <span class="pane-icon">📝</span>
+                                <h2>Input Message</h2>
+                            </div>
+                            <div class="pane-actions">
+                                <label for="fileImportInput" class="btn-btn-sm" title="Upload plain text file">
+                                    📂 Import .TXT
+                                </label>
+                                <input type="file" id="fileImportInput" accept=".txt" class="sr-only">
+                                <button id="btnClearInput" class="btn-btn-sm text-muted" title="Clear Input Text">
+                                    ✖ Clear
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Drag and Drop Overlay Zone -->
+                        <div class="drop-zone" id="dropZone">
+                            <div class="drop-zone-content">
+                                <span class="drop-icon">📥</span>
+                                <p class="drop-text">Drag & Drop a .TXT file here or paste text below</p>
+                            </div>
+                            <textarea id="inputText" class="code-textarea" placeholder="Enter your message here to encrypt or decrypt... (e.g. Hello, World!)" spellcheck="false" aria-label="Input Text Message"></textarea>
+                        </div>
+
+                        <!-- Shift Key Selector Card -->
+                        <div class="shift-control-card">
+                            <div class="shift-header">
+                                <label for="shiftSlider" class="shift-title">
+                                    🔑 Shift Key Offset (1 – 25)
+                                </label>
+                                <div class="shift-number-box">
+                                    <input type="number" id="shiftNumber" min="1" max="25" value="3" aria-label="Shift Number Value">
+                                </div>
+                            </div>
+
+                            <div class="slider-row">
+                                <span class="slider-limit">1</span>
+                                <input type="range" id="shiftSlider" min="1" max="25" value="3" class="custom-range" aria-label="Shift Slider Range">
+                                <span class="slider-limit">25</span>
+                            </div>
+
+                            <!-- Shift Presets & Randomizer -->
+                            <div class="shift-presets">
+                                <span class="preset-label">Presets:</span>
+                                <button class="preset-chip" data-shift="3">Shift 3 (Caesar)</button>
+                                <button class="preset-chip" data-shift="13">Shift 13 (ROT13)</button>
+                                <button class="preset-chip" data-shift="5">Shift 5</button>
+                                <button class="preset-chip" data-shift="7">Shift 7</button>
+                                <button id="btnRandomShift" class="preset-chip highlight" title="Generate Random Shift">
+                                    🎲 Random
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Main Primary Execute Action Bar -->
+                        <div class="action-bar">
+                            <button id="btnExecute" class="btn-primary btn-glow btn-block">
+                                <span class="btn-text" id="btnExecuteText">⚡ ENCRYPT MESSAGE</span>
+                            </button>
+                            
+                            <div class="secondary-action-row">
+                                <button id="btnSwap" class="btn-secondary" title="Swap Encrypt/Decrypt Mode">
+                                    🔄 Swap Mode
+                                </button>
+                                <button id="btnReset" class="btn-secondary" title="Reset everything to default">
+                                    ⚙️ Reset All
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Output & Live Analytics -->
+                    <div class="workspace-pane glass-card">
+                        <div class="pane-header">
+                            <div class="pane-title">
+                                <span class="pane-icon">🎯</span>
+                                <h2>Result Output</h2>
+                            </div>
+                            <div class="pane-actions">
+                                <button id="btnCopy" class="btn-btn-sm btn-accent" title="Copy Output to Clipboard">
+                                    📋 Copy Output
+                                </button>
+                                <button id="btnDownloadTxt" class="btn-btn-sm" title="Download output as .TXT file">
+                                    💾 Download .TXT
+                                </button>
+                                <button id="btnOutputToInput" class="btn-btn-sm text-purple" title="Move output to input textarea">
+                                    ⬆️ Use as Input
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Readonly Output Textarea -->
+                        <div class="output-wrapper">
+                            <textarea id="outputText" class="code-textarea readonly" readonly placeholder="Encrypted or decrypted result will appear here automatically..." aria-label="Output Result Text"></textarea>
+                        </div>
+
+                        <!-- Character Mapping Visualizer Bar -->
+                        <div class="mapping-preview-container">
+                            <span class="preview-title">Alphabet Key Shift Mapping:</span>
+                            <div id="characterMappingBar" class="mapping-bar">
+                                <!-- Dynamic character mapping pills rendered via JS -->
+                            </div>
+                        </div>
+
+                        <!-- Real-time Text Statistics Dashboard Grid -->
+                        <div class="stats-dashboard">
+                            <div class="stat-card">
+                                <span class="stat-icon">🔤</span>
+                                <span class="stat-val" id="statChars">0</span>
+                                <span class="stat-lbl">Characters</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-icon">🔠</span>
+                                <span class="stat-val" id="statLetters">0</span>
+                                <span class="stat-lbl">Letters</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-icon">⬆️</span>
+                                <span class="stat-val" id="statUpper">0</span>
+                                <span class="stat-lbl">Uppercase</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-icon">⬇️</span>
+                                <span class="stat-val" id="statLower">0</span>
+                                <span class="stat-lbl">Lowercase</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-icon">🔢</span>
+                                <span class="stat-val" id="statNums">0</span>
+                                <span class="stat-lbl">Numbers</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-icon">🔣</span>
+                                <span class="stat-val" id="statSymbols">0</span>
+                                <span class="stat-lbl">Symbols</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-icon">␣</span>
+                                <span class="stat-val" id="statSpaces">0</span>
+                                <span class="stat-lbl">Spaces</span>
+                            </div>
+                            <div class="stat-card highlight">
+                                <span class="stat-icon">🔑</span>
+                                <span class="stat-val" id="statShift">3</span>
+                                <span class="stat-lbl">Active Shift</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: ALPHABET WHEEL & STEP EXPLORER -->
+            <section id="view-wheel" class="tab-view" role="tabpanel" aria-labelledby="tab-wheel">
+                <div class="wheel-grid">
+                    
+                    <!-- Left: Interactive Animated Wheel -->
+                    <div class="wheel-pane glass-card">
+                        <div class="pane-header">
+                            <div class="pane-title">
+                                <span class="pane-icon">🎡</span>
+                                <h2>Animated Caesar Wheel</h2>
+                            </div>
+                            <span class="shift-badge">Offset: <strong id="wheelShiftLabel">3</strong></span>
+                        </div>
+                        <p class="wheel-desc">Outer Ring = Original Alphabet | Inner Ring = Shifted Alphabet</p>
+                        
+                        <div class="wheel-container" id="wheelContainer">
+                            <!-- Dual-Ring SVG Wheel Rendered via JS -->
+                            <svg id="caesarWheelSvg" viewBox="0 0 500 500" class="wheel-svg"></svg>
+                        </div>
+                    </div>
+
+                    <!-- Right: Step-by-step Transformation Table -->
+                    <div class="steps-pane glass-card">
+                        <div class="pane-header">
+                            <div class="pane-title">
+                                <span class="pane-icon">🔍</span>
+                                <h2>Step-by-Step Character Inspector</h2>
+                            </div>
+                        </div>
+                        <p class="pane-desc">Detailed mathematical breakdown per character using modular arithmetic: <code>(P + K) mod 26</code></p>
+                        
+                        <div class="steps-table-wrapper">
+                            <table class="steps-table">
+                                <thead>
+                                    <tr>
+                                        <th>Pos</th>
+                                        <th>Char</th>
+                                        <th>ASCII</th>
+                                        <th>Base Formula</th>
+                                        <th>Shifted ASCII</th>
+                                        <th>Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stepsTableBody">
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted">Enter text in the Cipher Studio to view step-by-step transformation.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: CRYPTANALYSIS & AUTO-CRACK -->
+            <section id="view-crack" class="tab-view" role="tabpanel" aria-labelledby="tab-crack">
+                <div class="crack-grid">
+                    
+                    <!-- Brute Force 25 Key Evaluator -->
+                    <div class="crack-card glass-card">
+                        <div class="pane-header">
+                            <div class="pane-title">
+                                <span class="pane-icon">⚡</span>
+                                <h2>Brute-Force Attack Scanner (25 Shifts)</h2>
+                            </div>
+                            <button id="btnRunBruteForce" class="btn-primary btn-btn-sm">
+                                🔍 Run Auto-Crack Analysis
+                            </button>
+                        </div>
+                        <p class="pane-desc">Scans all 25 possible Caesar keys simultaneously and ranks candidates by English letter frequency probability.</p>
+
+                        <div class="brute-results-wrapper">
+                            <table class="brute-table">
+                                <thead>
+                                    <tr>
+                                        <th>Shift Key</th>
+                                        <th>Likelihood Score</th>
+                                        <th>Decrypted Preview</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bruteForceTableBody">
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted">Click "Run Auto-Crack Analysis" to test all 25 key variations.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Frequency Analysis Chart -->
+                    <div class="crack-card glass-card">
+                        <div class="pane-header">
+                            <div class="pane-title">
+                                <span class="pane-icon">📊</span>
+                                <h2>Letter Frequency Analysis</h2>
+                            </div>
+                        </div>
+                        <p class="pane-desc">Compares current message letter frequencies against standard English distribution (ETAOIN SHRDLU).</p>
+
+                        <div class="freq-chart-container" id="freqChartContainer">
+                            <!-- Dynamic frequency chart rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: HISTORY & FAVORITES -->
+            <section id="view-history" class="tab-view" role="tabpanel" aria-labelledby="tab-history">
+                <div class="history-container glass-card">
+                    <div class="pane-header">
+                        <div class="pane-title">
+                            <span class="pane-icon">📜</span>
+                            <h2>Operation History & Saved Snippets</h2>
+                        </div>
+                        <div class="history-actions">
+                            <button id="btnExportHistory" class="btn-btn-sm" title="Export history to JSON file">
+                                📥 Export JSON
+                            </button>
+                            <label for="btnImportHistoryInput" class="btn-btn-sm" title="Import history JSON file">
+                                📤 Import JSON
+                            </label>
+                            <input type="file" id="btnImportHistoryInput" accept=".json" class="sr-only">
+                            <button id="btnClearHistory" class="btn-btn-sm btn-text-danger" title="Clear all history">
+                                🗑 Clear History
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filter & Search Controls -->
+                    <div class="history-filter-bar">
+                        <input type="text" id="historySearch" class="search-input" placeholder="🔍 Search history snippets...">
+                        <select id="historyFilter" class="filter-select">
+                            <option value="all">All Operations</option>
+                            <option value="encrypt">Encryption Only</option>
+                            <option value="decrypt">Decryption Only</option>
+                            <option value="favorite">Favorites Only ⭐</option>
+                        </select>
+                    </div>
+
+                    <!-- History List Grid -->
+                    <div id="historyList" class="history-list">
+                        <!-- Rendered dynamically by script.js -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: ACADEMY & CRYPTOGRAPHY THEORY -->
+            <section id="view-academy" class="tab-view" role="tabpanel" aria-labelledby="tab-academy">
+                <div class="academy-grid">
+                    
+                    <article class="academy-card glass-card">
+                        <div class="academy-header">
+                            <span class="academy-icon">🏛️</span>
+                            <h3>What is the Caesar Cipher?</h3>
+                        </div>
+                        <p>The <strong>Caesar Cipher</strong> is one of the oldest and simplest known encryption techniques. It is a type of <em>substitution cipher</em> in which each letter in the plaintext is shifted by a fixed number of positions down the alphabet.</p>
+                        <p>For example, with a shift of 3, letter <code>A</code> becomes <code>D</code>, <code>B</code> becomes <code>E</code>, and <code>Z</code> wraps around to <code>C</code>.</p>
+                    </article>
+
+                    <article class="academy-card glass-card">
+                        <div class="academy-header">
+                            <span class="academy-icon">📜</span>
+                            <h3>Historical Origin</h3>
+                        </div>
+                        <p>Named after <strong>Julius Caesar</strong>, who used it with a shift of 3 to protect military communications in the 1st century BCE. Roman historian Suetonius recorded that Caesar used it to send confidential dispatches to his generals Cicero and Mark Antony.</p>
+                    </article>
+
+                    <article class="academy-card glass-card">
+                        <div class="academy-header">
+                            <span class="academy-icon">📐</span>
+                            <h3>Mathematical Foundations</h3>
+                        </div>
+                        <p>The encryption can be represented using <strong>Modular Arithmetic</strong> over integers modulo 26:</p>
+                        <div class="math-box">
+                            <p><strong>Encryption:</strong> E<sub>k</sub>(x) = (x + k) mod 26</p>
+                            <p><strong>Decryption:</strong> D<sub>k</sub>(x) = (x - k) mod 26</p>
+                        </div>
+                        <p class="text-sm text-muted">Where <em>x</em> is the 0-indexed position of the letter (A=0, B=1, ... Z=25) and <em>k</em> is the key shift (1–25).</p>
+                    </article>
+
+                    <article class="academy-card glass-card">
+                        <div class="academy-header">
+                            <span class="academy-icon">🔓</span>
+                            <h3>Cryptanalysis & Vulnerabilities</h3>
+                        </div>
+                        <p>The Caesar Cipher is broken easily using two primary techniques:</p>
+                        <ul>
+                            <li><strong>Brute-Force Attack:</strong> Trying all 25 possible shifts since the keyspace is extremely small.</li>
+                            <li><strong>Frequency Analysis:</strong> Comparing letter frequencies in the ciphertext against standard English letter frequencies (e.g. 'E' occurs ~12.7% of the time).</li>
+                        </ul>
+                    </article>
+
+                    <article class="academy-card glass-card">
+                        <div class="academy-header">
+                            <span class="academy-icon">💻</span>
+                            <h3>ASCII & Unicode Handling</h3>
+                        </div>
+                        <p>Our tool preserves all character formatting:</p>
+                        <ul>
+                            <li><strong>Uppercase Letters (ASCII 65–90):</strong> Shifted independently within A–Z bounds.</li>
+                            <li><strong>Lowercase Letters (ASCII 97–122):</strong> Shifted independently within a–z bounds.</li>
+                            <li><strong>Numbers & Symbols:</strong> Preserved in exact position without alteration for maximum readability.</li>
+                        </ul>
+                    </article>
+
+                    <article class="academy-card glass-card">
+                        <div class="academy-header">
+                            <span class="academy-icon">🚀</span>
+                            <h3>Modern Cryptography Evolution</h3>
+                        </div>
+                        <p>While obsolete for securing sensitive data today, the Caesar Cipher forms the foundational teaching model for modern ciphers like the <strong>Vigenère Cipher</strong>, <strong>Enigma Machine</strong>, and modern symmetric algorithms like <strong>AES-256</strong>.</p>
+                    </article>
+
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class = "footer-content">
+            <p>Designed & Developed by <strong>SK ❤️</strong></p>
+            <p class="text-muted text-sm">&copy; 2026 Caesar Cipher Encryption Tool. Open Source MIT License.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- KEYBOARD SHORTCUTS MODAL -->
+    <div id="modalShortcuts" class="modal-backdrop" aria-hidden="true">
+        <div class="modal-card glass-card" role="dialog" aria-labelledby="modalTitle">
+            <div class="modal-header">
+                <h3 id="modalTitle">⌨️ Keyboard Shortcuts</h3>
+                <button id="btnCloseModal" class="close-btn" aria-label="Close Modal">✖</button>
+            </div>
+            <div class="modal-body">
+                <ul class="shortcuts-list">
+                    <li><kbd>Ctrl</kbd> + <kbd>Enter</kbd> <span>Execute Encrypt / Decrypt</span></li>
+                    <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> <span>Copy Output Text</span></li>
+                    <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> <span>Generate Random Shift</span></li>
+                    <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> <span>Swap Encrypt / Decrypt Mode</span></li>
+                    <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd> <span>Clear All Fields</span></li>
+                    <li><kbd>Esc</kbd> <span>Close Modal</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+    <!-- Main JavaScript File -->
+    <script src="script.js"></script>
+</body>
+</html>
