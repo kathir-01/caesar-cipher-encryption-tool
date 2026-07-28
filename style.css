@@ -1254,7 +1254,11 @@ kbd {
         grid-template-columns: repeat(2, 1fr);
     }
 }
-
+.app-footer {
+    background: var(--bg-card);
+    backdrop-filter: var(--glass-blur);
+    border-radius: 14px;
+}
 .footer-content {
     text-align: center;
     font-size: 0.85rem;
